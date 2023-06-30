@@ -22,30 +22,34 @@ names = ['bag1', 'basketball1', 'basketball2', 'basketball2.2', 'basketballnew',
          'walking_occ1', 'walking_occ_long', 'wdog_no1', 'wdog_occ3', 'wr_no', 'wr_no1', 
          'wr_occ2', 'wuguiTwo_no', 'zballpat_no1', 'zball_no1', 'zball_no2', 'zball_no3']
 
-root = './subset'
+root = './EvaluationSet'
 for name in names:
     
     boxes_result = []
     for i in range(1, 5000):
+        
         image_rgb_dir = os.path.join(root, name, 'rgb', str(i).zfill(3) + '.png')
         image_depth_dir = os.path.join(root, name, 'depth', str(i).zfill(3) + '.png')
         if not os.path.exists(image_rgb_dir):
             break
-        
         img_rgb = cv2.imread(image_rgb_dir)
         img_depth = cv2.imread(image_depth_dir)
         
         #####################
-        # Use your algrothm test data above, and get boxes_estimated: [x1, y1, x2, y2]
+        # Use your algrothm test data above, and get box_estimated: [x1, y1, x2, y2, score]
         box_estimated = []
         boxes_result.append(box_estimated)
         #####################
 
-    for box in boxes_result:
-        result_dir = os.path.join('./result', name + '.txt')
-        with open(result_dir, 'w') as f:
-            f.write(str(box[0]) + ',' +
-                    str(box[1]) + ',' +
-                    str(box[2]) + ',' +
-                    str(box[3]))
-            f.write('\n')
+    with open(result_dir, 'w') as f:
+        for box in boxes_result:
+            result_dir = os.path.join('./result', name + '.txt')
+            if box[4] > 0.2: # you can set this score threshold by yourself
+                f.write(str('{:.1f}'.format(box[0])) + ',' +
+                        str('{:.1f}'.format(box[1])) + ',' +
+                        str('{:.1f}'.format(box[2])) + ',' +
+                        str('{:.1f}'.format(box[3])))
+                f.write('\n')
+            else:
+                f.write('NaN,NaN,NaN,NaN')
+                f.write('\n')
