@@ -1,3 +1,6 @@
+# Pin Description
+Thank you all for your interest in our team's algorithm at https://github.com/lql-team/TSDM) This is my personal repository where all future updates to the TSDM algorithm will be made."
+
 # TSDM
 A RGB-D tracker base on CNN with using depth information.  
 Download paper https://arxiv.org/abs/2005.04063  
